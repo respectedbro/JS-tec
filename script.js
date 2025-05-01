@@ -1,21 +1,37 @@
 //1
-const person = {
-  name: "Nik",
-  age: 35,
-  occupation: "developer",
-  hobbies: ["sport", "gaming", "walk"],
-};
-
-for (let key in person) {
-  console.log(key, person[key]);
-}
-
-console.log(Object.keys(person));
-console.log(Object.values(person));
-console.log(Object.entries(person));
+const link = document.getElementById("link");
+link.textContent = "Новая ссылка";
 
 //2
-person.weight = 75;
-person.hobbies[0] = "relax";
-delete person.age;
-console.log(person);
+const item = document.querySelector(".item");
+item.style.cssText = `
+display: inline-block;
+background-color: blue;
+color: red;
+`;
+
+//3
+const elem = document.createElement("p");
+elem.textContent = "Новый параграф";
+document.body.append(elem);
+
+//4
+const removeElem = (id) => {
+  const elem = document.getElementById(id);
+
+  elem.remove();
+};
+
+removeElem("elem");
+
+//5
+link.setAttribute("href", "https://google.com");
+console.log(link.getAttribute("href"));
+
+//6
+const newElem = document.createElement("div");
+newElem.classList.add("new-elem");
+document.body.append(newElem);
+
+//7
+newElem.classList.toggle("old-elem");
