@@ -2,7 +2,7 @@
 const btn = document.querySelector(".btn");
 
 btn.addEventListener("click", () => {
-  btn.style.color = "red";
+  btn.textContent = "NEW TEXT";
 });
 
 //2
@@ -30,7 +30,7 @@ const form = document.querySelector("form");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log("Форма отправлена");
+  alert("Форма отправлена");
 });
 
 //5
