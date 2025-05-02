@@ -1,37 +1,42 @@
 //1
-const link = document.getElementById("link");
-link.textContent = "Новая ссылка";
+const btn = document.querySelector(".btn");
+
+btn.addEventListener("click", () => {
+  btn.style.color = "red";
+});
 
 //2
-const item = document.querySelector(".item");
-item.style.cssText = `
-display: inline-block;
-background-color: blue;
-color: red;
-`;
+const square = document.querySelector(".square");
+
+square.addEventListener("mouseover", () => {
+  square.style.width = "200px";
+  square.style.height = "200px";
+});
+
+square.addEventListener("mouseout", () => {
+  square.style.width = "100px";
+  square.style.height = "100px";
+});
 
 //3
-const elem = document.createElement("p");
-elem.textContent = "Новый параграф";
-document.body.append(elem);
+const input = document.querySelector("input");
+
+input.addEventListener("keyup", (e) => {
+  console.log(e.key);
+});
 
 //4
-const removeElem = (id) => {
-  const elem = document.getElementById(id);
+const form = document.querySelector("form");
 
-  elem.remove();
-};
-
-removeElem("elem");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log("Форма отправлена");
+});
 
 //5
-link.setAttribute("href", "https://google.com");
-console.log(link.getAttribute("href"));
+const changeThemeBtn = document.querySelector(".change-theme");
+const body = document.body;
 
-//6
-const newElem = document.createElement("div");
-newElem.classList.add("new-elem");
-document.body.append(newElem);
-
-//7
-newElem.classList.toggle("old-elem");
+changeThemeBtn.addEventListener("click", () => {
+  body.classList.toggle("dark-theme");
+});
