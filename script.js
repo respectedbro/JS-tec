@@ -11,19 +11,17 @@ const user = {
     userSay:  () => {
         setTimeout(() => {
             console.log('Hello');
-        }, 1000)
+        }, 1000);
     }
 
 };
 
-user.userSay()
+user.userSay();
 
 //3
 
-const transformArray = (transformFunc, arr) => {
-    return  transformFunc(arr)
-}
+const transformArray = (transformFunc, arr) =>  transformFunc(arr);
 
-console.log(transformArray(calcNumbers, arr))
+console.log(transformArray(calcNumbers, arr));
 
 
