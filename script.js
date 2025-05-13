@@ -1,29 +1,39 @@
 //1
-const myFunc = () => {
-  const elem = 12121;
-  console.log(elem);
-};
+function globFunc() {
+  const mess = "Hello";
+  return function () {
+    console.log(mess);
+  };
+}
 
-myFunc();
-console.log(elem);
-//Локальная переменная elem доступна только внутри функции, при обращении к ней вне функции будет ошибка
+const sayHello = globFunc();
+sayHello();
 
 //2
-if (elem === 121) {
-  const elem2 = 121211;
-  console.log(elem2);
-}
-console.log(elem2);
-//переменная доступна только внутри блока if, при обращении вне блока будет ошибка
+
+const func1 = () => {
+  const var1 = "первая";
+
+  const func2 = () => {
+    const var2 = "вторая";
+
+    const func3 = () => {
+      const var3 = "третья";
+
+      console.log(var1);
+      console.log(var2);
+      console.log(var3);
+    };
+
+    func3();
+    console.log(var1);
+    console.log(var2);
+  };
+
+  func2();
+  console.log(var1);
+};
+
+func1();
 
 //3
-// hoisting это механизм при котором объявления переменных и функций перемещаются в верхнюю часть области действия перед выполнением кода
-// hoisting есть у var и function declaration, и если переменную написать без var, let, const (типа a = 10)
-console.log(x); // undefined (
-var x = 5;
-
-sayHello(); // работает
-
-function sayHello() {
-  console.log("Привет!");
-}
