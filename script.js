@@ -1,39 +1,35 @@
 //1
-function globFunc() {
-  const mess = "Hello";
-  return function () {
-    console.log(mess);
-  };
-}
+const calcArrElems = (arr, idx = 0) => {
+  if (idx >= arr.length) {
+    return 0;
+  }
+  return arr[idx] + calcArrElems(arr, idx + 1);
+};
 
-const sayHello = globFunc();
-sayHello();
+console.log(calcArrElems([1, 2, 3, 4, 5]));
 
 //2
 
-const func1 = () => {
-  const var1 = "первая";
+const findMaxValue = (arr, idx = 0, max = 0) => {
+  if (idx >= arr.length) {
+    return max;
+  }
 
-  const func2 = () => {
-    const var2 = "вторая";
+  const currMax = arr[idx] > max ? arr[idx] : max;
 
-    const func3 = () => {
-      const var3 = "третья";
-
-      console.log(var1);
-      console.log(var2);
-      console.log(var3);
-    };
-
-    func3();
-    console.log(var1);
-    console.log(var2);
-  };
-
-  func2();
-  console.log(var1);
+  return findMaxValue(arr, idx + 1, currMax);
 };
 
-func1();
+console.log(findMaxValue([1, 2, 3, 4, 5]));
 
 //3
+
+function fibonacci(n) {
+  if (n <= 1) {
+    return n;
+  } else {
+    return fibonacci(n - 1) + fibonacci(n - 2);
+  }
+}
+
+console.log(fibonacci(10));
