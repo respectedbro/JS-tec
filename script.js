@@ -24,7 +24,7 @@ console.log(findMaxValue([1, 2, 3, 4, 5]));
 
 //3
 
-function fibonacci(n) {
+function fibonacci() {
     const cache = {};
 
     const fib = (n) => {
@@ -35,10 +35,11 @@ function fibonacci(n) {
         if (n <= 1) {
             return n;
         }
-        cache[n] = fib(n) + fib(n - 2);
+        cache[n] = fib(n - 1) + fib(n - 2);
         return cache[n];
     };
-    return fib();
+    return fib;
 }
 
-console.log(fibonacci(10));
+const getFib = fibonacci();
+console.log(getFib(10));
