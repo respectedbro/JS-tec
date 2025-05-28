@@ -1,43 +1,50 @@
 //1
-const safeDivide = (num1, num2) => {
-    try {
-        if (num2 === 0) {
-            throw new Error('Деление на ноль невозможно');
-        }
-        return num1 / num2;
-    } catch (error) {
-        console.log(error);
-        return null;
+const getCountDown = (count) => {
+    console.log(count);
+    if (count > 0) {
+        setTimeout(() => {
+            getCountDown(count - 1);
+        }, 1000);
     }
+
 };
-console.log(safeDivide(12, 0));
+
+getCountDown(10);
 
 //2
-
-const user = '{name: "Nk"}';
-const transfromJSON = (jsonStr) => {
-    try {
-        return JSON.parse(jsonStr);
-    } catch (error) {
-        console.log(error.message);
-        return null;
-    }
+const showIntervalMess = (mess) => {
+    setInterval(() => {
+        console.log(mess);
+    }, 1800000);
 };
 
-console.log(transfromJSON(user));
+showIntervalMess('Не забудь выпить воды');
 
 //3
+const interval = document.getElementById('interval');
+const text = document.getElementById('text');
+const button = document.querySelector('button');
 
-const checkAccess = (age) => {
-    try {
-        if (age >= 18) {
-            return 'залетай';
-        }
-        throw new Error('Доступ запрещен');
-    } catch (error) {
-       console.log(error);
-        return false;
+let timer;
+let isRun = false;
+button.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (isRun) {
+        clearInterval(timer);
+        button.textContent = 'Начать';
+        isRun = false;
+        console.log('Стоп');
+    } else {
+        const delay = interval.value;
+        const textValue = text.value;
+
+        // console.log(textValue);
+        timer =setInterval(() => {
+            console.log(textValue);
+        }, delay);
+
+        button.textContent = 'Стоп';
+        isRun = true;
     }
-};
 
-console.log(checkAccess(17));
+});
