@@ -1,50 +1,79 @@
 //1
-const getCountDown = (count) => {
-    console.log(count);
-    if (count > 0) {
-        setTimeout(() => {
-            getCountDown(count - 1);
-        }, 1000);
-    }
-
-};
-
-getCountDown(10);
+// const getUserData = () => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             reject({
+//                 name: 'user',
+//                 age: 22,
+//                 position: 'dev'
+//             });
+//         }, 2000);
+//     });
+// };
+//
+// getUserData()
+//     .then((data) => {
+//         console.log(data);
+//     })
+//     .catch((err) => {
+//         console.error('error ', err);
+//     });
 
 //2
-const showIntervalMess = (mess) => {
-    setInterval(() => {
-        console.log(mess);
-    }, 1800000);
-};
+// const getData1 = () => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve('data1')
+//         }, 3000);
+//     });
+// };
+// const getData2 = () => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve('data2')
+//         }, 5000);
+//     });
+// };
+//
+// Promise.all([getData1(), getData2()])
+//     .then((res) => {
+//         console.log('выполнены: ', res);
+//     })
+// .catch((err) => {
+//     console.log('ошибкаZ', err);
+// })
 
-showIntervalMess('Не забудь выпить воды');
 
 //3
-const interval = document.getElementById('interval');
-const text = document.getElementById('text');
-const button = document.querySelector('button');
+const getRandomTimeout = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
-let timer;
-let isRun = false;
-button.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (isRun) {
-        clearInterval(timer);
-        button.textContent = 'Начать';
-        isRun = false;
-        console.log('Стоп');
-    } else {
-        const delay = interval.value;
-        const textValue = text.value;
 
-        // console.log(textValue);
-        timer =setInterval(() => {
-            console.log(textValue);
-        }, delay);
 
-        button.textContent = 'Стоп';
-        isRun = true;
-    }
+const getData3 = () => {
+    const randTimeout = getRandomTimeout(1000, 5000)
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log(randTimeout);
+            resolve('data3')
+        }, randTimeout);
+    });
+};
+const getData4 = () => {
+    const randTimeout = getRandomTimeout(1000, 5000)
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log(randTimeout);
+            resolve('data4')
+        }, randTimeout);
+    });
+};
 
-});
+Promise.race([getData3(), getData4()])
+    .then((res) => {
+        console.log('выполнен: ', res);
+    })
+.catch((err) => {
+    console.log('ошибкаZ', err);
+})
