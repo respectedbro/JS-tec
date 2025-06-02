@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
+<div class="div1">
+    <div class="div2">
+        <div class="div3"></div>
+    </div>
+</div>
+
+<form id="myForm">
+    <div class="form-input">
+        <label>Имя:</label>
+        <input type="text" id="name">
+        <span class="error" id="nameError">Максимум 20 символов</span>
+    </div>
+
+    <div class="form-input">
+        <label>Пароль:</label>
+        <input type="password" id="pass">
+        <span class="error" id="passError">Максимум 20 символов</span>
+    </div>
+
+    <button type="submit">Войти</button>
+</form>
 
 </body>
 </html>
