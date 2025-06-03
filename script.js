@@ -1,26 +1,33 @@
 //1
 const delay = (ms) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve();
-        }, ms);
-    });
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
 };
 
 const func = async () => {
-    await delay(2000)
-    console.log('Задержка завершена');
-}
+  await delay(2000);
+  console.log("Задержка завершена");
+};
 
-func()
+func();
 
 //2
 
 const getData = async (url) => {
-    const response = await fetch(url)
-    const posts = await response.json()
-    console.log(posts);
-    console.log(response);
-}
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("какая-то ошибка");
+    }
 
-console.log(getData('https://jsonplaceholder.typicode.com/posts'));
+    const posts = await response.json();
+    console.log(posts);
+  } catch (err) {
+    console.error("Ошибка: ", err);
+  }
+};
+
+getData("https://jsonplaceholder.typicode.com/posts");
