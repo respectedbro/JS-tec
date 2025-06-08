@@ -98,24 +98,17 @@ form2.addEventListener("submit", (e) => {
 delBtn.addEventListener("click", removeStorage);
 
 //3
-const timer = document.querySelector(".timer");
-// Получаем элемент счетчика
 const counter = document.getElementById('counter');
 
-// Загружаем сохраненное время или начинаем с 0
 let seconds = sessionStorage.getItem('pageTime') || 0;
 
-// Обновляем счетчик на странице
 counter.textContent = seconds + ' сек';
 
-// Запускаем таймер
 const timer = setInterval(function() {
-  // Увеличиваем счетчик
-  seconds++;
 
-  // Обновляем на странице
-  counter.textContent = seconds + ' сек';
+    seconds++;
 
-  // Сохраняем в sessionStorage
-  sessionStorage.setItem('pageTime', seconds);
-}, 1000); // 1000 мс = 1 секунда
+    counter.textContent = seconds + ' сек';
+
+    sessionStorage.setItem('pageTime', seconds);
+}, 1000);
