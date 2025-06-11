@@ -7,46 +7,43 @@
 </head>
 <body>
 <form id="form">
-    <label for="name">Имя:</label>
-    <input type="text" id="name">
+    <label for="id">ID пользователя</label>
+    <input type="text" id="id">
     <br>
-    <label for="phone">Телефон:</label>
-    <input type="text" id="phone">
+    <label for="title">Заголовок:</label>
+    <input type="text" id="title">
     <br>
-    <label for="email">Email:</label>
-    <input type="email" id="email">
+    <label for="text">Текст:</label>
+    <input type="text" id="text">
     <br>
-    <button type="submit">Сохранить</button>
+    <button type="submit">Отправить</button>
+</form>
+<button id="all-posts">Показать посты</button>
+
+<form id="deleteForm">
+    <label for="postId">ID поста для удаления:</label>
+    <input type="text" id="postId">
+    <button type="submit">Удалить пост</button>
 </form>
 
-<div class="saved">
-</div>
+<form id="updateForm" class="update-form">
+    <h3>Обновить пост</h3>
+    <label for="updateId">ID поста:</label>
+    <input type="text" id="updateId">
 
-<br><br><br>
+    <label for="updateTitle">Новый заголовок:</label>
+    <input type="text" id="updateTitle">
 
-<form id="form2">
-    <label for="desc">Описание</label>
-    <input type="text" id="desc">
-    <br>
-    <label for="date">Дата</label>
-    <input type="date" id="date">
-    <br>
-    <label for="total">Сумма</label>
-    <input type="text" id="total">
+    <label for="updateBody">Новый текст:</label>
+    <input id="updateBody">
 
-
-    <button type="submit">Сохранить</button>
+    <button type="submit">Обновить пост</button>
 </form>
 
-<div class="show-list">
+<div id="response"></div>
 
-</div>
-<button class="del-btn">Удалить</button>
-<br>
-<br>
-<br>
+<div id="allPosts"></div>
 
-<h1>время на странице:</h1>
-<div id="counter">0 сек</div>
+
 </body>
 </html>

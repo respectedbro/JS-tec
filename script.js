@@ -1,114 +1,155 @@
-//1
+const requestURL = "https://jsonplaceholder.typicode.com/posts";
 const form = document.getElementById("form");
-const savedInfo = document.querySelector(".saved");
+const respDiv = document.getElementById("response");
+const allPostsBtn = document.getElementById("all-posts");
+const allPostsDiv = document.getElementById("allPosts");
+const deleteForm = document.getElementById("deleteForm");
+const updateForm = document.getElementById("updateForm");
 
-const showContact = () => {
-  const saved = localStorage.getItem("contact");
-
-  if (saved) {
-    const contact = JSON.parse(saved);
-    savedInfo.innerHTML = `
-          <p>Имя: ${contact.name}</p>
-          <p>Телефон: ${contact.phone}</p>
-          <p>Email: ${contact.email}</p>
-    `;
-  }
-};
-//
-// document.addEventListener('DOMContentLoaded', showContact);
-
-showContact();
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const formName = document.getElementById("name");
-  const formPhone = document.getElementById("phone");
-  const formEmail = document.getElementById("email");
-
-  const contact = {
-    name: formName.value,
-    phone: formPhone.value,
-    email: formEmail.value,
+const sendRequest = (method, url, body = null) => {
+  const headers = {
+    "Content-type": "application/json",
   };
 
-  localStorage.setItem("contact", JSON.stringify(contact));
+  const options = {
+    method,
+    headers,
+  };
 
-  showContact();
-});
-
-//2
-const form2 = document.getElementById("form2");
-const dataList = document.querySelector(".show-list");
-const delBtn = document.querySelector(".del-btn");
-
-const addExpData = (exp) => {
-  let expenses = [];
-
-  if (localStorage.getItem("expenses")) {
-    expenses = JSON.parse(localStorage.getItem("expenses"));
+  if (body && method !== "GET") {
+    options.body = JSON.stringify(body);
   }
 
-  expenses.push(exp);
-
-  localStorage.setItem("expenses", JSON.stringify(expenses));
-};
-
-const showList = () => {
-  dataList.innerHTML = "";
-  if (!localStorage.getItem("expenses")) {
-    dataList.innerHTML = "<span>Расходов нет</span>";
-    return;
-  }
-
-  const expenses = JSON.parse(localStorage.getItem("expenses"));
-  console.log(expenses);
-  expenses.forEach((exp) => {
-    dataList.innerHTML = `
-                    <p>Описание ${exp.description}</p> 
-                    <p> Сумма: ${exp.total}</p> 
-                    <p> Дата: ${exp.date}</p> 
-    `;
+  return fetch(url, options).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+    return response.json().then((err) => {
+      const e = new Error("Что-то пошло не так");
+      e.data = err;
+      throw e;
+    });
   });
 };
 
-const removeStorage = () => {
-  localStorage.removeItem("expenses");
-  showList();
+const deletePost = (postId) => {
+  return fetch(`${requestURL}/${postId}`, {
+    method: "DELETE",
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Ошибка при удалении поста");
+    }
+    return response.json();
+  });
 };
 
-showList();
-
-form2.addEventListener("submit", (e) => {
+deleteForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  const postId = document.getElementById("postId").value;
 
-  const description = document.getElementById("desc");
-  const date = document.getElementById("date");
-  const total = document.getElementById("total");
+  deletePost(postId)
+    .then(() => {
+      respDiv.innerHTML = `Пост ID ${postId} удален`;
 
-  const accData = {
-    description: description.value,
-    date: date.value,
-    total: total.value,
-  };
-
-  addExpData(accData);
-
-  showList();
+      const postElement = document.querySelector(`.post[data-id="${postId}"]`);
+      if (postElement) {
+        postElement.remove();
+        allPostsDiv.innerHTML = allPostsDiv.innerHTML.replace(
+          `<h3>Список постов:</h3>`,
+          ""
+        );
+        if (document.querySelectorAll(".post").length === 0) {
+          allPostsDiv.innerHTML = "<p>Постов нет</p>";
+        }
+      }
+    })
+    .catch((err) => {
+      respDiv.innerHTML = `Ошибка: ${err.message}`;
+      console.error(err);
+    });
 });
 
-delBtn.addEventListener("click", removeStorage);
+const updatePost = (postId, updatedData) => {
+  return sendRequest("PUT", `${requestURL}/${postId}`, updatedData).then(
+    (updatedPost) => {
+      const postElement = document.querySelector(`.post[data-id="${postId}"]`);
+      if (postElement) {
+        postElement.querySelector(".post-title").textContent =
+          updatedPost.title;
+        postElement.querySelector(".post-body").textContent = updatedPost.body;
+      }
+      return updatedPost;
+    }
+  );
+};
 
-//3
-const counter = document.getElementById('counter');
+updateForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const postId = document.getElementById("updateId").value;
+  const updatedData = {
+    id: parseInt(postId),
+    title: document.getElementById("updateTitle").value,
+    body: document.getElementById("updateBody").value,
+    userId: 1,
+  };
 
-let seconds = sessionStorage.getItem('pageTime') || 0;
+  updatePost(postId, updatedData)
+    .then((updatedPost) => {
+      respDiv.innerHTML = `
+                        <h3>Пост обновлен</h3>
+                        <p>ID: ${updatedPost.id}</p>
+                        <p>Новый заголовок: ${updatedPost.title}</p>
+                    `;
+    })
+    .catch((err) => {
+      respDiv.innerHTML = `Ошибка при обновлении: ${err.message}`;
+      console.error(err);
+    });
+});
 
-counter.textContent = seconds + ' сек';
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const userId = document.getElementById("id");
+  const title = document.getElementById("title");
+  const text = document.getElementById("text");
 
-const timer = setInterval(function() {
+  const postData = {
+    userId: userId.value,
+    title: title.value,
+    body: text.value,
+  };
 
-    seconds++;
+  sendRequest("POST", requestURL, postData)
+    .then((data) => {
+      console.log("ok");
+      respDiv.innerHTML = `Ответ от сервера: ваш ID: ${data.id}`;
+    })
+    .catch((err) => {
+      respDiv.innerHTML = `Ошибка: ${err.message}`;
+      console.error(err);
+    });
+});
 
-    counter.textContent = seconds + ' сек';
-
-    sessionStorage.setItem('pageTime', seconds);
-}, 1000);
+allPostsBtn.addEventListener("click", () => {
+  sendRequest("GET", requestURL)
+    .then((posts) => {
+      if (posts.length === 0) {
+        allPostsDiv.innerHTML = "<p>Постов нет</p>";
+        return;
+      }
+      let list = "<h3>Список постов:</h3>";
+      posts.forEach((post) => {
+        list += `
+                     <br>
+                    <div class="post" data-id="${post.id}">
+                        <div class="post-title">${post.title} (ID: ${post.id})</div>
+                        <div class="post-user">пользователь ${post.userId}</div>
+                        <div class="post-body">${post.body}</div>
+                    </div>
+               <br>
+        `;
+      });
+      allPostsDiv.innerHTML = list;
+    })
+    .catch((err) => console.log(err));
+});
