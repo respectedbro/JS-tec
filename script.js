@@ -22,7 +22,7 @@ func(1, 2);
 // console.log(func2(1, 2));
 
 const func2 = (b, a) => {
-  return b + b;
+  return b + a;
 };
 
 console.log(func2(1, 2));
