@@ -1,155 +1,44 @@
-const requestURL = "https://jsonplaceholder.typicode.com/posts";
-const form = document.getElementById("form");
-const respDiv = document.getElementById("response");
-const allPostsBtn = document.getElementById("all-posts");
-const allPostsDiv = document.getElementById("allPosts");
-const deleteForm = document.getElementById("deleteForm");
-const updateForm = document.getElementById("updateForm");
+"use strict";
+//1
+// const func = (a, b) => {
+//   "use strict";
+//   c = a + b;
+//   console.log(c);
+// };
 
-const sendRequest = (method, url, body = null) => {
-  const headers = {
-    "Content-type": "application/json",
-  };
-
-  const options = {
-    method,
-    headers,
-  };
-
-  if (body && method !== "GET") {
-    options.body = JSON.stringify(body);
-  }
-
-  return fetch(url, options).then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-    return response.json().then((err) => {
-      const e = new Error("Что-то пошло не так");
-      e.data = err;
-      throw e;
-    });
-  });
+const func = (a, b) => {
+  const c = a + b;
+  console.log(c);
 };
 
-const deletePost = (postId) => {
-  return fetch(`${requestURL}/${postId}`, {
-    method: "DELETE",
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Ошибка при удалении поста");
-    }
-    return response.json();
-  });
+func(1, 2);
+
+//2
+// const func2 = (b, b) => {
+//   "use strict";
+//   return b + b;
+// };
+//
+// console.log(func2(1, 2));
+
+const func2 = (b, a) => {
+  return b + b;
 };
 
-deleteForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const postId = document.getElementById("postId").value;
+console.log(func2(1, 2));
 
-  deletePost(postId)
-    .then(() => {
-      respDiv.innerHTML = `Пост ID ${postId} удален`;
+//3
 
-      const postElement = document.querySelector(`.post[data-id="${postId}"]`);
-      if (postElement) {
-        postElement.remove();
-        allPostsDiv.innerHTML = allPostsDiv.innerHTML.replace(
-          `<h3>Список постов:</h3>`,
-          ""
-        );
-        if (document.querySelectorAll(".post").length === 0) {
-          allPostsDiv.innerHTML = "<p>Постов нет</p>";
-        }
-      }
-    })
-    .catch((err) => {
-      respDiv.innerHTML = `Ошибка: ${err.message}`;
-      console.error(err);
-    });
-});
+// function func3() {
+//   console.log(this);
+// };
 
-const updatePost = (postId, updatedData) => {
-  return sendRequest("PUT", `${requestURL}/${postId}`, updatedData).then(
-    (updatedPost) => {
-      const postElement = document.querySelector(`.post[data-id="${postId}"]`);
-      if (postElement) {
-        postElement.querySelector(".post-title").textContent =
-          updatedPost.title;
-        postElement.querySelector(".post-body").textContent = updatedPost.body;
-      }
-      return updatedPost;
-    }
-  );
-};
+function func3() {
+  console.log(this);
+}
+func3();
 
-updateForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const postId = document.getElementById("updateId").value;
-  const updatedData = {
-    id: parseInt(postId),
-    title: document.getElementById("updateTitle").value,
-    body: document.getElementById("updateBody").value,
-    userId: 1,
-  };
-
-  updatePost(postId, updatedData)
-    .then((updatedPost) => {
-      respDiv.innerHTML = `
-                        <h3>Пост обновлен</h3>
-                        <p>ID: ${updatedPost.id}</p>
-                        <p>Новый заголовок: ${updatedPost.title}</p>
-                    `;
-    })
-    .catch((err) => {
-      respDiv.innerHTML = `Ошибка при обновлении: ${err.message}`;
-      console.error(err);
-    });
-});
-
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const userId = document.getElementById("id");
-  const title = document.getElementById("title");
-  const text = document.getElementById("text");
-
-  const postData = {
-    userId: userId.value,
-    title: title.value,
-    body: text.value,
-  };
-
-  sendRequest("POST", requestURL, postData)
-    .then((data) => {
-      console.log("ok");
-      respDiv.innerHTML = `Ответ от сервера: ваш ID: ${data.id}`;
-    })
-    .catch((err) => {
-      respDiv.innerHTML = `Ошибка: ${err.message}`;
-      console.error(err);
-    });
-});
-
-allPostsBtn.addEventListener("click", () => {
-  sendRequest("GET", requestURL)
-    .then((posts) => {
-      if (posts.length === 0) {
-        allPostsDiv.innerHTML = "<p>Постов нет</p>";
-        return;
-      }
-      let list = "<h3>Список постов:</h3>";
-      posts.forEach((post) => {
-        list += `
-                     <br>
-                    <div class="post" data-id="${post.id}">
-                        <div class="post-title">${post.title} (ID: ${post.id})</div>
-                        <div class="post-user">пользователь ${post.userId}</div>
-                        <div class="post-body">${post.body}</div>
-                    </div>
-               <br>
-        `;
-      });
-      allPostsDiv.innerHTML = list;
-    })
-    .catch((err) => console.log(err));
-});
+//4
+const obj = {};
+delete obj.toString;
+delete Object.prototype.toString();
