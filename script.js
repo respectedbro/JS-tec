@@ -66,7 +66,7 @@ class Rectangle {
     }
 
     set height(val) {
-        val <= 0 ? console.log('Высота должна быть положительным числом') : this._height = val;
+        val <= 0 ? console.error('Высота должна быть положительным числом') : this._height = val;
     }
 }
 
