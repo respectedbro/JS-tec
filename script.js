@@ -30,16 +30,16 @@ console.log(Student.prototype);
 class Employee extends Person {
   constructor(name, position) {
     super(name);
-    this.positoin = position;
+    this.position = position;
   }
 
   work() {
-    console.log(`Я работаю на позиции ${this.positoin}`);
+    console.log(`Я работаю на позиции ${this.position}`);
   }
 
   introduce() {
     console.log(
-      `Привет, меня зовут ${this.name}, моя специальность ${this.positoin}`
+      `Привет, меня зовут ${this.name}, моя специальность ${this.position}`
     );
   }
 }
