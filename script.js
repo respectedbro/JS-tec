@@ -58,7 +58,7 @@ class Rectangle {
     }
 
     get perimeter() {
-        return this.width + this.height * 2;
+        return 2 * (this.width + this.height);
     }
 
     get height() {
