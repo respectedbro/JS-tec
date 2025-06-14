@@ -61,12 +61,5 @@ Car.drive = function () {
   console.log(`${this.name} даёт угла`);
 };
 
-function createCar(name) {
-  const car = Object.create(Car);
-  car.name = name;
-  return car;
-}
-
-const myCar = createCar("Volkswagen");
-myCar.move();
-myCar.drive();
+Car.move();
+Car.drive();
