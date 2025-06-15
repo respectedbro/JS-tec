@@ -1,65 +1,59 @@
 //1
-class Person {
-  constructor(name) {
-    this.name = name;
+class Counter {
+  #count = 0;
+
+  counterPlus() {
+    this.#count++;
   }
 
-  introduce() {
-    console.log(`Привет меня зовут ${this.name}`);
-  }
-}
-
-class Student extends Person {
-  constructor(name, course) {
-    super(name);
-    this.course = course;
+  counterMinus() {
+    this.#count--;
   }
 
-  introduce() {
-    console.log(
-      `Привет, меня зовут ${this.name}, и я учусь на ${this.course} курсе`
-    );
+  displayCount() {
+    console.log(this.#count);
   }
 }
 
-const user = new Student("alex", 1);
-user.introduce();
-console.log(Student.prototype);
+const count = new Counter();
+
+count.counterPlus();
+count.counterPlus();
+count.counterPlus();
+count.counterMinus();
+count.displayCount();
 
 //2
-class Employee extends Person {
-  constructor(name, position) {
-    super(name);
-    this.positoin = position;
-  }
-
-  work() {
-    console.log(`Я работаю на позиции ${this.positoin}`);
-  }
-
-  introduce() {
-    console.log(
-      `Привет, меня зовут ${this.name}, моя специальность ${this.positoin}`
-    );
+class EmailValidator {
+  static isValid(email) {
+    if (!email.includes("@")) {
+      console.log("Введите корректный email");
+    }
   }
 }
 
-const user1 = new Employee("Ad", "developer");
-user1.work();
-user1.introduce();
+EmailValidator.isValid("example@gmail.com");
+EmailValidator.isValid("examplegmail.com");
 
 //3
-const Vehicle = {
-  move() {
-    console.log(`${this.name} валит`);
-  },
-};
+class Order {
+  #total = 0;
 
-const Car = Object.create(Vehicle);
+  #calculateTotal(price) {
+    this.#total += price;
+  }
 
-Car.drive = function () {
-  console.log(`${this.name} даёт угла`);
-};
+  addPrice(price) {
+    this.#calculateTotal(price);
+    console.log(`добавлено ${price}`);
+  }
 
-Car.move();
-Car.drive();
+  getTotal() {
+    return this.#total;
+  }
+}
+
+const order = new Order();
+order.addPrice(1990);
+order.addPrice(990);
+console.log(`Общая стоимость: ${order.getTotal()}`);
