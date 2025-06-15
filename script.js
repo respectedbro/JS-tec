@@ -1,59 +1,40 @@
 //1
-class Counter {
-  #count = 0;
+const user = {};
 
-  counterPlus() {
-    this.#count++;
-  }
+Object.defineProperty(user, "name", {
+  value: "Nik",
+  writable: false,
+  configurable: false,
+  enumerable: true,
+});
 
-  counterMinus() {
-    this.#count--;
-  }
+Object.defineProperty(user, "position", {
+  value: "developer",
+  writable: false,
+  configurable: false,
+  enumerable: true,
+});
 
-  displayCount() {
-    console.log(this.#count);
-  }
-}
-
-const count = new Counter();
-
-count.counterPlus();
-count.counterPlus();
-count.counterPlus();
-count.counterMinus();
-count.displayCount();
+user.name = "alex";
+user.position = "driver";
+console.log(user);
+console.log(user.name);
 
 //2
-class EmailValidator {
-  static isValid(email) {
-    if (!email.includes("@")) {
-      console.log("Введите корректный email");
-    }
-  }
+
+const employee = {
+  name: "Ben",
+  age: 30,
+  wage: 1000,
+  position: "boss",
+};
+
+Object.defineProperty(employee, "position", {
+  writable: true,
+  configurable: true,
+  enumerable: false,
+});
+
+for (let key in employee) {
+  console.log(key);
 }
-
-EmailValidator.isValid("example@gmail.com");
-EmailValidator.isValid("examplegmail.com");
-
-//3
-class Order {
-  #total = 0;
-
-  #calculateTotal(price) {
-    this.#total += price;
-  }
-
-  addPrice(price) {
-    this.#calculateTotal(price);
-    console.log(`добавлено ${price}`);
-  }
-
-  getTotal() {
-    return this.#total;
-  }
-}
-
-const order = new Order();
-order.addPrice(1990);
-order.addPrice(990);
-console.log(`Общая стоимость: ${order.getTotal()}`);
